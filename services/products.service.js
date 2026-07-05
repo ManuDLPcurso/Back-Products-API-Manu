@@ -9,14 +9,32 @@ const FILE = path.join(
   "../data/products.json"
 );
 
-export async function getProducts() {
+/*export async function getProducts() {
   const data = await fs.readFile(FILE, "utf8");
   return JSON.parse(data);
 }
 export async function getProduct(id) {
   const products = await getProducts();
   return products.find((p) => p.id === id);
+
+}*/
+
+let productsCache = null;
+
+export async function getProducts() {
+  if (!productsCache) {
+    const data = await fs.readFile(FILE, "utf8");
+    productsCache = JSON.parse(data);
+  }
+
+  return productsCache;
 }
+
+export async function getProduct(id) {
+  const products = await getProducts();
+  return products.find((p) => p.id === id);
+}
+
 export async function createProduct(product) {
   const products = await getProducts();
   products.push(product);
