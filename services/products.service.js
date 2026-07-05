@@ -20,7 +20,7 @@ export async function getProduct(id) {
 export async function createProduct(product) {
   const products = await getProducts();
   products.push(product);
-  await fs.writeFile(FILE, JSON.stringify(products, null, 2));
+  //await fs.writeFile(FILE, JSON.stringify(products, null, 2));
   return product;
 }
 export async function updateProduct(id, data) {
